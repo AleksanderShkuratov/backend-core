@@ -90,8 +90,8 @@ class LeadTest {
 
     // Then
     assertThat(toString).isEqualTo(
-        "Lead{id='L1', email='test@example.com', phone='+71234567890', company='TestCorp', status='NEW'}");
+        "Lead{id='L1', email='test@example.com', phone='+71234567890', company='TestCorp',"
+            + " status='NEW'}");
   }
-
 
 }
