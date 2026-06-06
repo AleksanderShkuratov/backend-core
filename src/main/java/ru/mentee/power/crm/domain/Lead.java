@@ -1,5 +1,7 @@
 package ru.mentee.power.crm.domain;
 
+import java.util.Objects;
+
 public class Lead {
 
   private String id;
@@ -46,4 +48,22 @@ public class Lead {
         + ", status='" + status + '\''
         + '}';
   }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Lead lead = (Lead) o;
+    return Objects.equals(getId(), lead.getId());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(getId());
+  }
+
 }
