@@ -12,9 +12,9 @@ class ContactTest {
     Contact contact = new Contact("Petr", "Famusov", "test@example.com");
 
     // When
-    String firstName = contact.getFirstName();
-    String lastName = contact.getLastName();
-    String email = contact.getEmail();
+    String firstName = contact.firstName();
+    String lastName = contact.lastName();
+    String email = contact.email();
 
     // Then
     assertThat(firstName).isEqualTo("Petr");
