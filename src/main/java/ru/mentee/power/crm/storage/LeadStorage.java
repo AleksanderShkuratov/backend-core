@@ -9,7 +9,7 @@ public class LeadStorage {
   public boolean add(Lead lead) {
     // 1. Проверь дубликат: пройди по цикл по массиву leads
     for (int index = 0; index < leads.length; index++) {
-      if (leads[index] != null && leads[index].email().equals(lead.email())) {
+      if (leads[index] != null && leads[index].id().equals(lead.id())) {
         return false;
       }
     }
