@@ -3,6 +3,7 @@ package ru.mentee.power.crm.domain;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import java.util.UUID;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,8 +25,8 @@ class LeadTest {
   @DisplayName("getEmail() выводит значение поля email у объекта Lead")
   void shouldReturnEmailWhenGetEmailCalled() {
     // Given
-    Lead lead = new Lead( UUID.randomUUID(),
-         "test@example.com", "+71234567890", "TestCorp", "NEW");
+    Lead lead = new Lead(UUID.randomUUID(),
+        "test@example.com", "+71234567890", "TestCorp", "NEW");
 
     // When
     String email = lead.email();
@@ -38,7 +39,7 @@ class LeadTest {
   @DisplayName("getPhone() выводит значение поля phone у объекта Lead")
   void shouldReturnPhoneWhenGetPhoneCalled() {
     // Given
-    Lead lead = new Lead( UUID.randomUUID(),
+    Lead lead = new Lead(UUID.randomUUID(),
         "test@example.com", "+71234567890", "TestCorp", "NEW");
 
     // When
@@ -52,8 +53,8 @@ class LeadTest {
   @DisplayName("getCompany() выводит значение поля company у объекта Lead")
   void shouldReturnCompanyWhenGetCompanyCalled() {
     // Given
-    Lead lead = new Lead( UUID.randomUUID(),
-         "test@example.com", "+71234567890", "TestCorp", "NEW");
+    Lead lead = new Lead(UUID.randomUUID(),
+        "test@example.com", "+71234567890", "TestCorp", "NEW");
 
     // When
     String company = lead.company();
@@ -67,7 +68,7 @@ class LeadTest {
   void shouldReturnStatusWhenGetStatusCalled() {
     // Given
     Lead lead = new Lead(UUID.randomUUID(),
-         "test@example.com", "+71234567890", "TestCorp", "NEW");
+        "test@example.com", "+71234567890", "TestCorp", "NEW");
 
     // When
     String status = lead.status();
@@ -83,7 +84,7 @@ class LeadTest {
     UUID uuid = UUID.randomUUID();
 
     Lead lead = new Lead(uuid,
-         "test@example.com", "+71234567890", "TestCorp", "NEW");
+        "test@example.com", "+71234567890", "TestCorp", "NEW");
 
     // When
     String toString = lead.toString();
@@ -93,6 +94,33 @@ class LeadTest {
     // Then
     assertThat(toString).isEqualTo(exptedString);
 
+  }
+
+  @Test
+  @DisplayName("демонстрация типобезопасности поля id у Lead")
+  void shoulPreventStringConfusionWhenUsingUUID() {
+    // Given
+    UUID uuid = UUID.randomUUID();
+
+    Lead lead = new Lead(uuid,
+        "test@example.com", "+71234567890", "TestCorp", "NEW");
+
+    // When
+
+    // findById("not-a-uuid") - не скомпилируется
+    // Lead result = findById("123"); // ERROR: incompatible types
+
+    Lead result = findById(uuid);
+
+    // Then
+    assertThat(result).isEqualTo(lead);
+
+  }
+
+  private Lead findById(UUID id) {
+    // Заглушка
+    return new Lead(id,
+        "test@example.com", "+71234567890", "TestCorp", "NEW");
   }
 
 }
