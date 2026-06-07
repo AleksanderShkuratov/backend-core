@@ -9,19 +9,18 @@ import java.util.UUID;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-public class LeadEqualsHashCodeTest {
+class LeadEqualsHashCodeTest {
 
   private static final String CITY = "Klin";
   private static final String STREET = "Lenina";
   private static final String ZIP = "141601";
   private static final String EMAIL = "test@example.com";
   private static final String PHONE = "+71234567890";
-  private static Address address;
   private static Contact contact;
 
   @BeforeAll
   static void setUp() {
-    address = new Address(CITY, STREET, ZIP);
+    Address address = new Address(CITY, STREET, ZIP);
     contact = new Contact(EMAIL, PHONE, address);
   }
 
@@ -88,10 +87,12 @@ public class LeadEqualsHashCodeTest {
     UUID uuid = UUID.randomUUID();
     Lead firstLead = new Lead(uuid, contact, "TechCorp", "NEW");
     Lead secondLead = new Lead(uuid, contact, "TechCorp", "NEW");
+    int firstLeadHashCode = firstLead.hashCode();
+    int secondLeadHashCode = secondLead.hashCode();
 
     // Then: Если объекты равны, то hashCode должен быть одинаковым
     assertThat(firstLead).isEqualTo(secondLead);
-    assertThat(firstLead.hashCode()).isEqualTo(secondLead.hashCode());
+    assertThat(firstLeadHashCode).isEqualTo(secondLeadHashCode);
   }
 
   @Test

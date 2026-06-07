@@ -4,12 +4,12 @@ import ru.mentee.power.crm.domain.Lead;
 
 public class LeadStorage {
 
-  private Lead[] leads = new Lead[100];
+  private final Lead[] leads = new Lead[100];
 
   public boolean add(Lead lead) {
     // 1. Проверь дубликат: пройди по цикл по массиву leads
-    for (int index = 0; index < leads.length; index++) {
-      if (leads[index] != null && leads[index].id().equals(lead.id())) {
+    for (Lead value : leads) {
+      if (value != null && value.id().equals(lead.id())) {
         return false;
       }
     }
@@ -29,8 +29,8 @@ public class LeadStorage {
   public Lead[] findAll() {
     // 1.Посчитай количество не нулевых элементов
     int count = 0;
-    for (int index = 0; index < leads.length; index++) {
-      if (leads[index] != null) {
+    for (Lead lead : leads) {
+      if (lead != null) {
         count++;
       }
     }
@@ -40,9 +40,9 @@ public class LeadStorage {
 
     // 3. Заполни result ненулевыми элементами
     int resultIndex = 0;
-    for (int index = 0; index < leads.length; index++) {
-      if (leads[index] != null) {
-        result[resultIndex++] = leads[index];
+    for (Lead lead : leads) {
+      if (lead != null) {
+        result[resultIndex++] = lead;
       }
     }
 
@@ -52,8 +52,8 @@ public class LeadStorage {
 
   public int size() {
     int count = 0;
-    for (int i = 0; i < leads.length; i++) {
-      if (leads[i] != null) {
+    for (Lead lead : leads) {
+      if (lead != null) {
         count++;
       }
     }

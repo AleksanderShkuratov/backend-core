@@ -81,25 +81,19 @@ class LeadTest {
   }
 
   @Test
-  @DisplayName("Создание Lead с status=null бросает исключение IllegalArgumentException")
+  @DisplayName("Создание Lead с неправильным status бросает исключение IllegalArgumentException")
   void shouldThrowExceptionWhenStatusIsNull() {
     UUID uuid = UUID.randomUUID();
+
+    // Создание Lead с status=null бросает исключение IllegalArgumentException
     assertThatThrownBy(() -> new Lead(uuid, contact, "TechCorp", null)).isInstanceOf(
         IllegalArgumentException.class);
-  }
 
-  @Test
-  @DisplayName("Создание Lead с status=  бросает исключение IllegalArgumentException")
-  void shouldThrowExceptionWhenStatusIsBlank() {
-    UUID uuid = UUID.randomUUID();
+    // Создание Lead с status=  бросает исключение IllegalArgumentException
     assertThatThrownBy(() -> new Lead(uuid, contact, "TechCorp", "")).isInstanceOf(
         IllegalArgumentException.class);
-  }
 
-  @Test
-  @DisplayName("Создание Lead с не разрешенным status бросает исключение IllegalArgumentException")
-  void shouldThrowExceptionWhenStatusNoAllowedStatuses() {
-    UUID uuid = UUID.randomUUID();
+    // Создание Lead с не разрешенным status бросает исключение IllegalArgumentException
     assertThatThrownBy(() -> new Lead(uuid, contact, "TechCorp", "INWORK")).isInstanceOf(
         IllegalArgumentException.class);
   }
@@ -191,7 +185,7 @@ class LeadTest {
 
     // When
     String toString = lead.toString();
-    String exptedString = "Lead[id=" + String.valueOf(uuid)
+    String exptedString = "Lead[id=" + uuid
         + ", contact=Contact[email=test@example.com, phone=+71234567890,"
         + " address=Address[city=Klin, street=Lenina, zip=141601]]," + " company=TestCorp,"
         + " status=NEW]";
