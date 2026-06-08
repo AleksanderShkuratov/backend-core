@@ -1,6 +1,7 @@
 package ru.mentee.power.crm.domain;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static ru.mentee.power.crm.util.TestObjectFactory.createContact;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,18 +11,12 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class LeadEqualsHashCodeTest {
-
-  private static final String CITY = "Klin";
-  private static final String STREET = "Lenina";
-  private static final String ZIP = "141601";
-  private static final String EMAIL = "test@example.com";
-  private static final String PHONE = "+71234567890";
+  
   private static Contact contact;
 
   @BeforeAll
   static void setUp() {
-    Address address = new Address(CITY, STREET, ZIP);
-    contact = new Contact(EMAIL, PHONE, address);
+    contact = createContact();
   }
 
   @Test
