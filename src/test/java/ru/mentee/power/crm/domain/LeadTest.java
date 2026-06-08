@@ -2,6 +2,10 @@ package ru.mentee.power.crm.domain;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static ru.mentee.power.crm.util.TestObjectFactory.DEFAULT_CITY;
+import static ru.mentee.power.crm.util.TestObjectFactory.DEFAULT_EMAIL;
+import static ru.mentee.power.crm.util.TestObjectFactory.DEFAULT_PHONE;
+import static ru.mentee.power.crm.util.TestObjectFactory.createAddress;
 
 import java.util.UUID;
 
@@ -12,18 +16,13 @@ import org.junit.jupiter.api.Test;
 @DisplayName("Тестирование Lead")
 class LeadTest {
 
-  private static final String CITY = "Klin";
-  private static final String STREET = "Lenina";
-  private static final String ZIP = "141601";
-  private static final String EMAIL = "test@example.com";
-  private static final String PHONE = "+71234567890";
   private static Address address;
   private static Contact contact;
 
   @BeforeAll
   static void setUp() {
-    address = new Address(CITY, STREET, ZIP);
-    contact = new Contact(EMAIL, PHONE, address);
+    address = createAddress();
+    contact = new Contact(DEFAULT_EMAIL, DEFAULT_PHONE, address);
   }
 
   @Test
@@ -48,8 +47,8 @@ class LeadTest {
     String city = lead.contact().address().city();
 
     // Then
-    assertThat(email).isEqualTo(EMAIL);
-    assertThat(city).isEqualTo(CITY);
+    assertThat(email).isEqualTo(DEFAULT_EMAIL);
+    assertThat(city).isEqualTo(DEFAULT_CITY);
   }
 
   @Test
@@ -58,7 +57,7 @@ class LeadTest {
     // Given
     UUID uuid = UUID.randomUUID();
     Lead lead = new Lead(uuid, contact, "TechCorp", "NEW");
-    Contact otherContact = new Contact("other@mail.com", PHONE, address);
+    Contact otherContact = new Contact("other@mail.com", DEFAULT_PHONE, address);
     Lead leadDifferentContact = new Lead(uuid, otherContact, "TechCorp", "NEW");
 
     // Then
@@ -68,16 +67,16 @@ class LeadTest {
   @Test
   @DisplayName("Создание Lead с id=null бросает исключение IllegalArgumentException")
   void shouldThrowExceptionWhenIdIsNull() {
-    assertThatThrownBy(() -> new Lead(null, contact, "TechCorp", "NEW")).isInstanceOf(
-        IllegalArgumentException.class);
+    assertThatThrownBy(() -> new Lead(null, contact, "TechCorp", "NEW"))
+        .isInstanceOf(IllegalArgumentException.class);
   }
 
   @Test
   @DisplayName("Создание Lead с Contact=null бросает исключение IllegalArgumentException")
   void shouldThrowExceptionWhenContactIsNull() {
     UUID uuid = UUID.randomUUID();
-    assertThatThrownBy(() -> new Lead(uuid, null, "TechCorp", "NEW")).isInstanceOf(
-        IllegalArgumentException.class);
+    assertThatThrownBy(() -> new Lead(uuid, null, "TechCorp", "NEW"))
+        .isInstanceOf(IllegalArgumentException.class);
   }
 
   @Test
@@ -86,16 +85,16 @@ class LeadTest {
     UUID uuid = UUID.randomUUID();
 
     // Создание Lead с status=null бросает исключение IllegalArgumentException
-    assertThatThrownBy(() -> new Lead(uuid, contact, "TechCorp", null)).isInstanceOf(
-        IllegalArgumentException.class);
+    assertThatThrownBy(() -> new Lead(uuid, contact, "TechCorp", null))
+        .isInstanceOf(IllegalArgumentException.class);
 
     // Создание Lead с status=  бросает исключение IllegalArgumentException
-    assertThatThrownBy(() -> new Lead(uuid, contact, "TechCorp", "")).isInstanceOf(
-        IllegalArgumentException.class);
+    assertThatThrownBy(() -> new Lead(uuid, contact, "TechCorp", ""))
+        .isInstanceOf(IllegalArgumentException.class);
 
     // Создание Lead с не разрешенным status бросает исключение IllegalArgumentException
-    assertThatThrownBy(() -> new Lead(uuid, contact, "TechCorp", "INWORK")).isInstanceOf(
-        IllegalArgumentException.class);
+    assertThatThrownBy(() -> new Lead(uuid, contact, "TechCorp", "INWORK"))
+        .isInstanceOf(IllegalArgumentException.class);
   }
 
   @Test
@@ -108,7 +107,7 @@ class LeadTest {
     String city = lead.contact().address().city();
 
     // Then
-    assertThat(city).isEqualTo(CITY);
+    assertThat(city).isEqualTo(DEFAULT_CITY);
   }
 
   @Test
@@ -133,7 +132,7 @@ class LeadTest {
     String email = lead.contact().email();
 
     // Then
-    assertThat(email).isEqualTo(EMAIL);
+    assertThat(email).isEqualTo(DEFAULT_EMAIL);
   }
 
   @Test
@@ -146,7 +145,7 @@ class LeadTest {
     String phone = lead.contact().phone();
 
     // Then
-    assertThat(phone).isEqualTo(PHONE);
+    assertThat(phone).isEqualTo(DEFAULT_PHONE);
   }
 
   @Test
