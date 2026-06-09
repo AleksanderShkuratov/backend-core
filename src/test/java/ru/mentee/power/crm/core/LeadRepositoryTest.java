@@ -123,13 +123,13 @@ class LeadRepositoryTest {
 
     long startSet = System.nanoTime();
     for (int i = 0; i < 10000; i++) {
-      leadSet.contains(leadContains);
+      assertFalse(leadSet.contains(leadContains));
     }
     long hashSetTime = System.nanoTime() - startSet;
 
     long startList = System.nanoTime();
     for (int i = 0; i < 10000; i++) {
-      leadList.contains(leadContains);
+      assertFalse(leadList.contains(leadContains));
     }
     long arrayListTime = System.nanoTime() - startList;
 
