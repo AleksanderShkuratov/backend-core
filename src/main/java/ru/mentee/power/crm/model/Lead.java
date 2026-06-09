@@ -18,7 +18,7 @@ public record Lead(
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ru.mentee.power.crm.domain.Lead lead = (ru.mentee.power.crm.domain.Lead) o;
+    Lead lead = (Lead) o;
     return Objects.equals(id(), lead.id());
   }
 

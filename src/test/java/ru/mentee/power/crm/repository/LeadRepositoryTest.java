@@ -5,6 +5,7 @@ import static ru.mentee.power.crm.util.TestObjectFactory.DEFAULT_EMAIL;
 import static ru.mentee.power.crm.util.TestObjectFactory.DEFAULT_PHONE;
 
 import java.util.UUID;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
