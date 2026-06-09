@@ -164,4 +164,27 @@ class LeadRepositoryTest {
     System.out.println("List поиск: " + listDuration + " ns");
     System.out.println("Ускорение: " + (listDuration / mapDuration) + "x");
   }
+
+  @Test
+  void shouldSaveBothLeadsEvenWithSameEmailAndPhoneBecauseRepositoryDoesNotCheckBusinessRules() {
+    // Given: два Lead с разными id, но одинаковыми контактами
+    String idFirst = String.valueOf(UUID.randomUUID());
+    String idSecond = String.valueOf(UUID.randomUUID());
+
+    Lead originalLead = new Lead(idFirst,
+        DEFAULT_EMAIL, DEFAULT_PHONE, "TestCompany", "NEW");
+    Lead duplicateLead = new Lead(idSecond,
+        DEFAULT_EMAIL, DEFAULT_PHONE, "TestCompany", "NEW");
+
+    // When: сохраняем оба
+    repository.save(originalLead);
+    repository.save(duplicateLead);
+
+    // Then: Repository сохранил оба (это технически правильно!)
+    assertThat(repository.size()).isEqualTo(2);
+
+    // But: Бизнес недоволен — в CRM два контакта на одного человека
+    // Решение: Service Layer в Sprint 5 будет проверять бизнес-правила
+    // перед вызовом repository.save()
+  }
 }
