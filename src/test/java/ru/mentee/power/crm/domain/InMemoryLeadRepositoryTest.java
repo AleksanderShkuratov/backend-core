@@ -15,7 +15,7 @@ import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@DisplayName("Тестирование Lead")
+@DisplayName("Тестирование InMemoryLeadRepository")
 class InMemoryLeadRepositoryTest {
 
   @Test
