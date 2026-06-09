@@ -40,7 +40,7 @@ class AddressTest {
 
     // Then
     assertThat(address1).isEqualTo(address2);
-    assertEquals(address1.hashCode(),address2.hashCode());
+    assertEquals(address1.hashCode(), address2.hashCode());
   }
 
   @Test
