@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static ru.mentee.power.crm.util.TestObjectFactory.DEFAULT_EMAIL;
 import static ru.mentee.power.crm.util.TestObjectFactory.DEFAULT_PHONE;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -118,5 +120,48 @@ class LeadRepositoryTest {
 
     // Then
     assertThat(repository.size()).isEqualTo(3);
+  }
+
+  @Test
+  void shouldFindFasterWithMapThanWithListFilter() {
+    // Given: Создать 1000 лидов
+    List<Lead> leadList = new ArrayList<>();
+    String targetId = "lead-500";  // Средний элемент
+    for (int i = 0; i < 1000; i++) {
+      String id = String.valueOf(UUID.randomUUID());
+      Lead lead = new Lead(
+          id,
+          "email" + i + "@test.com",
+          "+7" + i,
+          "Company" + i,
+          "NEW");
+      repository.save(lead);
+      leadList.add(lead);
+      if (i == 499) {
+        targetId = id;
+      }
+    }
+
+    String finalTargetId = targetId;
+    // When: Поиск через Map
+    long mapStart = System.nanoTime();
+    Lead foundInMap = repository.findById(finalTargetId);
+    long mapDuration = System.nanoTime() - mapStart;
+
+    // When: Поиск через List.stream().filter()
+    long listStart = System.nanoTime();
+    Lead foundInList = leadList.stream()
+        .filter(lead -> lead.id().equals(finalTargetId))
+        .findFirst()
+        .orElse(null);
+    long listDuration = System.nanoTime() - listStart;
+
+    // Then: Map должен быть минимум в 10 раз быстрее
+    assertThat(foundInMap).isEqualTo(foundInList);
+    assertThat(listDuration).isGreaterThan(mapDuration * 10);
+
+    System.out.println("Map поиск: " + mapDuration + " ns");
+    System.out.println("List поиск: " + listDuration + " ns");
+    System.out.println("Ускорение: " + (listDuration / mapDuration) + "x");
   }
 }
