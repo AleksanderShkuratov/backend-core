@@ -6,6 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static ru.mentee.power.crm.util.TestObjectFactory.createLead;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.jupiter.api.DisplayName;
@@ -100,6 +103,38 @@ class LeadRepositoryTest {
     assertThatThrownBy(() -> repository.add(null)).isInstanceOf(IllegalArgumentException.class);
     assertThatThrownBy(() -> repository.contains(null))
         .isInstanceOf(IllegalArgumentException.class);
+  }
+
+  @Test
+  @DisplayName("Should perform contains() faster than ArrayList")
+  void shouldPerformFasterThanArrayList() {
+    // Given
+    Set<Lead> leadSet = new HashSet<>();
+    List<Lead> leadList = new ArrayList<>();
+
+    for (int i = 0; i < 10000; i++) {
+      Lead lead = createLead();
+      leadSet.add(lead);
+      leadList.add(lead);
+    }
+
+    // When
+    Lead leadContains = createLead();
+
+    long startSet = System.nanoTime();
+    for (int i = 0; i < 10000; i++) {
+      leadSet.contains(leadContains);
+    }
+    long hashSetTime = System.nanoTime() - startSet;
+
+    long startList = System.nanoTime();
+    for (int i = 0; i < 10000; i++) {
+      leadList.contains(leadContains);
+    }
+    long arrayListTime = System.nanoTime() - startList;
+
+    // Then
+    assertTrue(arrayListTime > (hashSetTime * 100));
   }
 
 }
